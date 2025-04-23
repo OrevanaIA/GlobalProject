@@ -1,0 +1,214 @@
+@model GestionTickets.Models.Ticket
+
+@{
+    ViewData["Title"] = "Detalles del Ticket";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1><i class="fas fa-info-circle me-2"></i>Detalles del Ticket</h1>
+        <p class="text-muted">Información completa del ticket #@Model.Id</p>
+    </div>
+    <div>
+        <a asp-action="Index" class="btn btn-outline-primary">
+            <i class="fas fa-arrow-left me-2"></i>Volver a la Lista
+        </a>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+        <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+                <i class="fas fa-ticket-alt me-2"></i>@Model.Titulo
+            </h5>
+            <div>
+                <span class="badge @(Model.Estado == EstadoTicket.Completado ? "bg-success" : 
+                                    Model.Estado == EstadoTicket.EnProgreso ? "bg-primary" : 
+                                    Model.Estado == EstadoTicket.EnRevision ? "bg-info" : 
+                                    Model.Estado == EstadoTicket.Cancelado ? "bg-danger" : "bg-warning")">
+                    <i class="fas @(Model.Estado == EstadoTicket.Completado ? "fa-check-circle" : 
+                                  Model.Estado == EstadoTicket.EnProgreso ? "fa-spinner fa-spin" : 
+                                  Model.Estado == EstadoTicket.EnRevision ? "fa-search" : 
+                                  Model.Estado == EstadoTicket.Cancelado ? "fa-times-circle" : "fa-clock") me-1"></i>
+                    @Html.DisplayFor(model => model.Estado)
+                </span>
+                <span class="badge @(Model.Prioridad == PrioridadTicket.Baja ? "bg-success" : 
+                                    Model.Prioridad == PrioridadTicket.Media ? "bg-info" : 
+                                    Model.Prioridad == PrioridadTicket.Alta ? "bg-warning" : "bg-danger")">
+                    <i class="fas @(Model.Prioridad == PrioridadTicket.Baja ? "fa-arrow-down" : 
+                                  Model.Prioridad == PrioridadTicket.Media ? "fa-equals" : 
+                                  Model.Prioridad == PrioridadTicket.Alta ? "fa-arrow-up" : "fa-exclamation-circle") me-1"></i>
+                    @Html.DisplayFor(model => model.Prioridad)
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="fas fa-align-left me-2"></i>Descripción</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="border p-3 bg-light rounded">@Model.Descripcion</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0"><i class="fas fa-user-tag me-2"></i>Información de Asignación</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-primary text-white rounded-circle p-3 me-3">
+                                <i class="fas fa-user fa-2x"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-0">@Model.PersonaAsignada</h5>
+                                <p class="text-muted mb-0">@Model.Cargo</p>
+                            </div>
+                        </div>
+                        
+                        <hr>
+                        
+                        <dl class="row">
+                            <dt class="col-sm-4">
+                                <i class="fas fa-phone me-2 text-primary"></i>
+                                @Html.DisplayNameFor(model => model.Telefono)
+                            </dt>
+                            <dd class="col-sm-8">
+                                <a href="tel:@Model.Telefono" class="text-decoration-none">
+                                    @Html.DisplayFor(model => model.Telefono)
+                                </a>
+                            </dd>
+                            
+                            <dt class="col-sm-4">
+                                <i class="fas fa-envelope me-2 text-primary"></i>
+                                @Html.DisplayNameFor(model => model.Email)
+                            </dt>
+                            <dd class="col-sm-8">
+                                <a href="mailto:@Model.Email" class="text-decoration-none">
+                                    @Html.DisplayFor(model => model.Email)
+                                </a>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-secondary text-white">
+                        <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i>Información de Fechas</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-marker bg-primary">
+                                    <i class="fas fa-plus"></i>
+                                </div>
+                                <div class="timeline-content">
+                                    <h6 class="mb-0">Creación del Ticket</h6>
+                                    <p class="text-muted mb-0">
+                                        <i class="far fa-calendar-alt me-1"></i>
+                                        @Model.FechaCreacion.ToString("dd/MM/yyyy")
+                                        <i class="far fa-clock ms-2 me-1"></i>
+                                        @Model.FechaCreacion.ToString("HH:mm")
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            @if (Model.UltimaActualizacion.HasValue)
+                            {
+                                <div class="timeline-item">
+                                    <div class="timeline-marker bg-info">
+                                        <i class="fas fa-edit"></i>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <h6 class="mb-0">Última Actualización</h6>
+                                        <p class="text-muted mb-0">
+                                            <i class="far fa-calendar-alt me-1"></i>
+                                            @Model.UltimaActualizacion.Value.ToString("dd/MM/yyyy")
+                                            <i class="far fa-clock ms-2 me-1"></i>
+                                            @Model.UltimaActualizacion.Value.ToString("HH:mm")
+                                        </p>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="timeline-item">
+                                    <div class="timeline-marker bg-secondary">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <h6 class="mb-0">Sin Actualizaciones</h6>
+                                        <p class="text-muted mb-0">Este ticket no ha sido actualizado desde su creación</p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="d-flex justify-content-between">
+            <div>
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">
+                    <i class="fas fa-edit me-2"></i>Editar
+                </a>
+                <a asp-action="Index" class="btn btn-outline-secondary ms-2">
+                    <i class="fas fa-list me-2"></i>Volver a la Lista
+                </a>
+            </div>
+            <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger">
+                <i class="fas fa-trash-alt me-2"></i>Eliminar
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Estilos para la línea de tiempo */
+    .timeline {
+        position: relative;
+        padding: 1rem 0;
+    }
+    
+    .timeline:before {
+        content: '';
+        position: absolute;
+        height: 100%;
+        width: 2px;
+        background: var(--border-color);
+        left: 14px;
+        top: 0;
+    }
+    
+    .timeline-item {
+        position: relative;
+        margin-bottom: 1.5rem;
+        padding-left: 40px;
+    }
+    
+    .timeline-marker {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        left: 0;
+        top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+    }
+</style>

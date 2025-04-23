@@ -1,0 +1,175 @@
+@model GestionTickets.Models.Ticket
+
+@{
+    ViewData["Title"] = "Crear Ticket";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1><i class="fas fa-plus-circle me-2"></i>Crear Nuevo Ticket</h1>
+        <p class="text-muted">Complete el formulario para crear un nuevo ticket en el sistema.</p>
+    </div>
+    <div>
+        <a asp-action="Index" class="btn btn-outline-primary">
+            <i class="fas fa-arrow-left me-2"></i>Volver a la Lista
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create" id="ticketForm">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+            
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Información del Ticket</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="Titulo" class="control-label">
+                                    <i class="fas fa-heading me-1"></i> @Html.DisplayNameFor(model => model.Titulo)
+                                </label>
+                                <input asp-for="Titulo" class="form-control" placeholder="Ingrese un título descriptivo" />
+                                <span asp-validation-for="Titulo" class="text-danger"></span>
+                                <small class="form-text text-muted">Máximo 100 caracteres</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group mb-3">
+                                <label asp-for="Estado" class="control-label">
+                                    <i class="fas fa-tasks me-1"></i> @Html.DisplayNameFor(model => model.Estado)
+                                </label>
+                                <select asp-for="Estado" class="form-select" asp-items="Html.GetEnumSelectList<EstadoTicket>()"></select>
+                                <span asp-validation-for="Estado" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group mb-3">
+                                <label asp-for="Prioridad" class="control-label">
+                                    <i class="fas fa-flag me-1"></i> @Html.DisplayNameFor(model => model.Prioridad)
+                                </label>
+                                <select asp-for="Prioridad" class="form-select" asp-items="Html.GetEnumSelectList<PrioridadTicket>()"></select>
+                                <span asp-validation-for="Prioridad" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group mb-3">
+                        <label asp-for="Descripcion" class="control-label">
+                            <i class="fas fa-align-left me-1"></i> @Html.DisplayNameFor(model => model.Descripcion)
+                        </label>
+                        <textarea asp-for="Descripcion" class="form-control" rows="5" placeholder="Describa el problema o tarea en detalle"></textarea>
+                        <span asp-validation-for="Descripcion" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="fas fa-user-tag me-2"></i>Información de Asignación</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="PersonaAsignada" class="control-label">
+                                    <i class="fas fa-user me-1"></i> @Html.DisplayNameFor(model => model.PersonaAsignada)
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    <input asp-for="PersonaAsignada" class="form-control" placeholder="Nombre de la persona asignada" />
+                                </div>
+                                <span asp-validation-for="PersonaAsignada" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="Cargo" class="control-label">
+                                    <i class="fas fa-briefcase me-1"></i> @Html.DisplayNameFor(model => model.Cargo)
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-briefcase"></i></span>
+                                    <input asp-for="Cargo" class="form-control" placeholder="Cargo o posición" />
+                                </div>
+                                <span asp-validation-for="Cargo" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="Telefono" class="control-label">
+                                    <i class="fas fa-phone me-1"></i> @Html.DisplayNameFor(model => model.Telefono)
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                    <input asp-for="Telefono" class="form-control" placeholder="Número de teléfono" />
+                                </div>
+                                <span asp-validation-for="Telefono" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label asp-for="Email" class="control-label">
+                                    <i class="fas fa-envelope me-1"></i> @Html.DisplayNameFor(model => model.Email)
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                    <input asp-for="Email" class="form-control" type="email" placeholder="correo@ejemplo.com" />
+                                </div>
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Crear Ticket
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary ms-2">
+                                <i class="fas fa-times me-2"></i>Cancelar
+                            </a>
+                        </div>
+                        <button type="reset" class="btn btn-outline-warning">
+                            <i class="fas fa-undo me-2"></i>Restablecer Formulario
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        $(document).ready(function() {
+            // Mejora visual para los campos de formulario
+            $('input, textarea').focus(function() {
+                $(this).closest('.form-group').addClass('was-validated');
+            });
+            
+            // Confirmación antes de restablecer el formulario
+            $('button[type="reset"]').click(function(e) {
+                if (!confirm('¿Está seguro de que desea restablecer el formulario? Se perderán todos los datos ingresados.')) {
+                    e.preventDefault();
+                }
+            });
+            
+            // Animación al enviar el formulario
+            $('#ticketForm').submit(function() {
+                $('button[type="submit"]').html('<i class="fas fa-spinner fa-spin me-2"></i>Creando...');
+                $('button[type="submit"]').prop('disabled', true);
+            });
+        });
+    </script>
+}

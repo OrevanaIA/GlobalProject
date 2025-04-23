@@ -1,0 +1,47 @@
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Bienvenido al Sistema de Gestión de Tickets</h1>
+    <p>Un sistema completo para la gestión de tickets similar a Jira.</p>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Gestión de Tickets</h5>
+            </div>
+            <div class="card-body">
+                <p>Administre sus tickets de manera eficiente con nuestro sistema.</p>
+                <ul>
+                    <li>Creación de tickets con información detallada</li>
+                    <li>Asignación a personas específicas</li>
+                    <li>Seguimiento del estado y prioridad</li>
+                    <li>Gestión completa del ciclo de vida del ticket</li>
+                </ul>
+                <a asp-controller="Tickets" asp-action="Index" class="btn btn-primary">Ver Tickets</a>
+                <a asp-controller="Tickets" asp-action="Create" class="btn btn-success">Crear Nuevo Ticket</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Características Principales</h5>
+            </div>
+            <div class="card-body">
+                <p>Nuestro sistema ofrece:</p>
+                <ul>
+                    <li>Interfaz intuitiva y fácil de usar</li>
+                    <li>Gestión completa de tickets</li>
+                    <li>Seguimiento de estados y prioridades</li>
+                    <li>Información detallada de cada ticket</li>
+                    <li>Asignación a personas específicas</li>
+                    <li>Registro de fechas de creación y actualización</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
