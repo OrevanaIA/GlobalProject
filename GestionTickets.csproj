@@ -5,7 +5,17 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-GestionTickets-53bc9b9d-9d6a-45d4-8429-2a2761773502</UserSecretsId>
+    <!-- Completely disable assembly info generation -->
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="GestionTickets.Tests\**" />
+    <Content Remove="GestionTickets.Tests\**" />
+    <EmbeddedResource Remove="GestionTickets.Tests\**" />
+    <None Remove="GestionTickets.Tests\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.25" />
