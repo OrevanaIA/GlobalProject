@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentación Técnica - Sistema de Gestión de Tickets</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .btn {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 10px 10px 10px 0;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        .note {
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        code {
+            background-color: #f8f8f8;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sistema de Gestión de Tickets</h1>
+    <p>Bienvenido a la documentación técnica del Sistema de Gestión de Tickets, una aplicación web desarrollada en ASP.NET Core 6.0 que permite la gestión eficiente de tickets de soporte o incidencias.</p>
+
+    <div class="card">
+        <h2>Documentación Disponible</h2>
+        <p>La documentación técnica completa está disponible en los siguientes formatos:</p>
+        
+        <a href="Documentacion_Tecnica_GestionTickets.html" class="btn">Ver Documentación HTML</a>
+        <a href="Documentacion_Tecnica_GestionTickets.md" class="btn">Ver Documentación Markdown</a>
+        
+        <div class="note">
+            <p><strong>Nota:</strong> Para visualizar correctamente los diagramas en la documentación HTML, asegúrese de tener conexión a internet, ya que se utiliza la biblioteca Mermaid.js para renderizar los diagramas.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Scripts para abrir la documentación</h2>
+        <p>Se proporcionan scripts para facilitar la apertura de la documentación en su navegador:</p>
+        <ul>
+            <li><strong>Linux/macOS:</strong> Ejecute <code>./abrir_documentacion.sh</code> en la terminal</li>
+            <li><strong>Windows:</strong> Haga doble clic en <code>abrir_documentacion.bat</code></li>
+        </ul>
+        <p>Estos scripts abrirán automáticamente la documentación HTML en su navegador predeterminado.</p>
+    </div>
+
+    <div class="card">
+        <h2>Contenido de la Documentación</h2>
+        <p>La documentación técnica incluye:</p>
+        <ol>
+            <li><strong>Introducción:</strong> Visión general del sistema y propósito de la documentación.</li>
+            <li><strong>Diseño Detallado:</strong> Modelo de dominio, diagramas de clases y de base de datos.</li>
+            <li><strong>Flujo de Trabajo:</strong> Diagramas de flujo y casos de uso principales.</li>
+            <li><strong>Implementación Técnica:</strong> Arquitectura, tecnologías utilizadas y estructura del proyecto.</li>
+            <li><strong>Patrones de Diseño:</strong> Descripción de los patrones implementados (MVC, Repository, Dependency Injection).</li>
+            <li><strong>API Reference:</strong> Controladores, endpoints y modelos de datos.</li>
+            <li><strong>Seguridad:</strong> Autenticación, autorización, protección de datos y validación de entradas.</li>
+            <li><strong>Rendimiento y Escalabilidad:</strong> Optimizaciones, estrategias de caché y escalabilidad.</li>
+            <li><strong>Pruebas de Calidad:</strong> Estrategia de pruebas, cobertura y automatización.</li>
+            <li><strong>Despliegue y Operaciones:</strong> Entornos, CI/CD y monitoreo.</li>
+            <li><strong>Mantenimiento y Roadmap:</strong> Gestión de versiones, roadmap de funcionalidades y deuda técnica.</li>
+        </ol>
+    </div>
+
+    <div class="card">
+        <h2>Cómo Ejecutar el Proyecto</h2>
+        <p>Para ejecutar el proyecto:</p>
+        <ol>
+            <li>Asegúrese de tener instalado .NET 6.0 SDK</li>
+            <li>Clone el repositorio</li>
+            <li>Navegue a la carpeta del proyecto</li>
+            <li>Ejecute los siguientes comandos:
+                <pre><code>dotnet restore
+dotnet build
+dotnet run</code></pre>
+            </li>
+            <li>Abra un navegador y vaya a <code>https://localhost:5001</code> o <code>http://localhost:5000</code></li>
+        </ol>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 - Sistema de Gestión de Tickets</p>
+    </footer>
+</body>
+</html>

@@ -1,247 +1,120 @@
-# Sistema de Gestión de Tickets
+# Sistema de Gestión de Tickets - Documentación Técnica
 
-![Banner de Gestión de Tickets](https://via.placeholder.com/800x200/1a73e8/ffffff?text=Gesti%C3%B3n+de+Tickets)
+## Resumen
 
-Una aplicación web elegante y profesional desarrollada en ASP.NET Core para gestionar tickets similar a Jira. Esta aplicación permite crear, editar, eliminar y gestionar tickets con diferentes propiedades como título, descripción, estado, prioridad, persona asignada, cargo, teléfono y correo electrónico.
+Este repositorio contiene un sistema de gestión de tickets desarrollado en ASP.NET Core 6.0. El sistema permite la creación, seguimiento, actualización y resolución de tickets de soporte o incidencias, proporcionando una interfaz intuitiva y funcional para los usuarios.
 
-## 🌟 Características Principales
+## Documentación Técnica
 
-- **Diseño Elegante en Tonos Azules**: Interfaz moderna y profesional con una paleta de colores azules
-- **Gestión Completa de Tickets (CRUD)**: Crear, leer, actualizar y eliminar tickets
-- **Asignación de Tickets**: Asignar tickets a personas específicas con información de contacto
-- **Seguimiento de Estados**: Pendiente, En Progreso, En Revisión, Completado, Cancelado
-- **Gestión de Prioridades**: Baja, Media, Alta, Crítica
-- **Interfaz Intuitiva y Responsive**: Diseño adaptable a diferentes dispositivos
-- **Validación de Datos Mejorada**: Feedback visual inmediato al usuario
-- **Animaciones y Transiciones**: Mejora de la experiencia de usuario
-- **Búsqueda y Filtrado**: Búsqueda rápida y filtros para tickets
-- **Confirmaciones Elegantes**: Modales de confirmación para acciones destructivas
+La documentación técnica completa está disponible en los siguientes formatos:
 
-## 📋 Requisitos Previos
+- **Markdown**: [Documentacion_Tecnica_GestionTickets.md](Documentacion_Tecnica_GestionTickets.md)
+- **HTML**: [Documentacion_Tecnica_GestionTickets.html](Documentacion_Tecnica_GestionTickets.html)
 
-- **.NET 6.0 SDK** o superior
-- **SQLite** (incluido en el proyecto, no requiere instalación adicional)
-- **Visual Studio 2022**, **Visual Studio Code** con extensiones para C#, o **JetBrains Rider**
-- **Navegador moderno** (Chrome, Firefox, Edge, Safari)
+Para visualizar correctamente los diagramas en la documentación HTML, asegúrese de tener conexión a internet, ya que se utiliza la biblioteca Mermaid.js para renderizar los diagramas.
 
-## 🚀 Instalación y Configuración
+### Acceso a la documentación
 
-### Opción 1: Clonar el Repositorio
+Hay varias formas de acceder a la documentación:
 
-```bash
-# Clonar el repositorio
-git clone https://github.com/tu-usuario/GestionTickets.git
+1. **Página de inicio**: Abra el archivo `index.html` en su navegador para acceder a una página de inicio con enlaces a toda la documentación.
 
-# Navegar al directorio del proyecto
-cd GestionTickets
+2. **Scripts para abrir la documentación**:
+   - **Linux/macOS**: Ejecute `./abrir_documentacion.sh` en la terminal
+   - **Windows**: Haga doble clic en `abrir_documentacion.bat`
 
-# Restaurar dependencias
-dotnet restore
+3. **Acceso directo a los archivos**:
+   - **Markdown**: [Documentacion_Tecnica_GestionTickets.md](Documentacion_Tecnica_GestionTickets.md)
+   - **HTML**: [Documentacion_Tecnica_GestionTickets.html](Documentacion_Tecnica_GestionTickets.html)
 
-# Ejecutar migraciones para crear la base de datos
-dotnet ef database update
+## Contenido de la Documentación
 
-# Ejecutar la aplicación
-dotnet run
-```
+La documentación técnica incluye:
 
-### Opción 2: Descargar y Configurar
+1. **Introducción**: Visión general del sistema y propósito de la documentación.
+2. **Diseño Detallado**: Modelo de dominio, diagramas de clases y de base de datos.
+3. **Flujo de Trabajo**: Diagramas de flujo y casos de uso principales.
+4. **Implementación Técnica**: Arquitectura, tecnologías utilizadas y estructura del proyecto.
+5. **Patrones de Diseño**: Descripción de los patrones implementados (MVC, Repository, Dependency Injection).
+6. **API Reference**: Controladores, endpoints y modelos de datos.
+7. **Seguridad**: Autenticación, autorización, protección de datos y validación de entradas.
+8. **Rendimiento y Escalabilidad**: Optimizaciones, estrategias de caché y escalabilidad.
+9. **Pruebas de Calidad**: Estrategia de pruebas, cobertura y automatización.
+10. **Despliegue y Operaciones**: Entornos, CI/CD y monitoreo.
+11. **Mantenimiento y Roadmap**: Gestión de versiones, roadmap de funcionalidades y deuda técnica.
 
-1. **Descargar el Código Fuente**:
-   - Descargar el archivo ZIP del repositorio
-   - Extraer el contenido en una carpeta de su elección
-
-2. **Abrir el Proyecto**:
-   - Abrir la solución `GestionTickets.sln` en Visual Studio
-   - O abrir la carpeta del proyecto en Visual Studio Code
-
-3. **Restaurar Dependencias**:
-   ```bash
-   dotnet restore
-   ```
-
-4. **Configurar la Base de Datos**:
-   - La aplicación utiliza SQLite por defecto, configurada en `appsettings.json`
-   - Para cambiar a otro proveedor de base de datos, modificar la cadena de conexión
-
-5. **Aplicar Migraciones**:
-   ```bash
-   dotnet ef database update
-   ```
-
-6. **Restaurar Bibliotecas Cliente**:
-   ```bash
-   # Instalar LibMan CLI si no está instalado
-   dotnet tool install -g Microsoft.Web.LibraryManager.Cli --version 2.1.175
-
-   # Restaurar bibliotecas cliente
-   libman restore
-   ```
-
-7. **Ejecutar la Aplicación**:
-   ```bash
-   dotnet run
-   ```
-
-8. **Acceder a la Aplicación**:
-   - Abrir un navegador y navegar a:
-     - http://localhost:5000 (HTTP)
-     - https://localhost:5001 (HTTPS)
-
-## 🏗️ Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 GestionTickets/
 ├── Controllers/                # Controladores MVC
-│   ├── HomeController.cs       # Controlador para la página de inicio
+│   ├── HomeController.cs       # Controlador para la página principal
 │   └── TicketsController.cs    # Controlador para la gestión de tickets
 ├── Data/                       # Capa de acceso a datos
-│   └── ApplicationDbContext.cs # Contexto de Entity Framework
-├── Models/                     # Modelos de datos
+│   └── ApplicationDbContext.cs # Contexto de EF Core
+├── Models/                     # Modelos de dominio
 │   ├── ErrorViewModel.cs       # Modelo para manejo de errores
-│   └── Ticket.cs               # Modelo principal para los tickets
-├── Views/                      # Vistas de la aplicación
-│   ├── Home/                   # Vistas para el controlador Home
-│   ├── Shared/                 # Vistas compartidas y layouts
+│   └── Ticket.cs               # Modelo principal de Ticket
+├── Views/                      # Vistas Razor
+│   ├── Home/                   # Vistas del controlador Home
+│   ├── Shared/                 # Vistas compartidas (layouts, etc.)
 │   └── Tickets/                # Vistas para la gestión de tickets
-├── wwwroot/                    # Archivos estáticos
+├── wwwroot/                    # Recursos estáticos
 │   ├── css/                    # Hojas de estilo
-│   ├── js/                     # Scripts de JavaScript
+│   ├── js/                     # Scripts JavaScript
 │   └── lib/                    # Bibliotecas de terceros
-├── appsettings.json            # Configuración de la aplicación
-├── GestionTickets.csproj       # Archivo de proyecto .NET
-├── Program.cs                  # Punto de entrada de la aplicación
-└── README.md                   # Este archivo
+├── Migrations/                 # Migraciones de EF Core
+├── GestionTickets.Tests/       # Proyecto de pruebas
+│   ├── HomeControllerTests.cs  # Pruebas para HomeController
+│   ├── TicketModelTests.cs     # Pruebas para el modelo Ticket
+│   └── TicketsControllerTests.cs # Pruebas para TicketsController
+├── Program.cs                  # Punto de entrada y configuración
+└── appsettings.json            # Configuración de la aplicación
 ```
 
-## 📱 Uso Detallado
+## Tecnologías Utilizadas
 
-### Gestión de Tickets
+- **Backend**:
+  - ASP.NET Core 6.0
+  - Entity Framework Core 6.0
+  - ASP.NET Core Identity
+  - SQLite
 
-1. **Listar Tickets**:
-   - Navegar a la página principal de tickets para ver todos los tickets existentes
-   - Utilizar los filtros rápidos para ver tickets por estado
-   - Usar la función de búsqueda para encontrar tickets específicos
-   - Ordenar la tabla haciendo clic en los encabezados de columna
+- **Frontend**:
+  - Razor Views
+  - Bootstrap 5
+  - jQuery
+  - Font Awesome
 
-2. **Crear Ticket**:
-   - Hacer clic en "Crear Nuevo Ticket"
-   - Completar el formulario con la información requerida:
-     - Título: Descripción breve del ticket
-     - Estado: Estado inicial del ticket (por defecto: Pendiente)
-     - Prioridad: Importancia del ticket (por defecto: Baja)
-     - Descripción: Detalles completos del problema o tarea
-     - Información de Asignación: Persona responsable y datos de contacto
-   - Hacer clic en "Crear Ticket" para guardar
+- **Herramientas de Desarrollo**:
+  - Visual Studio / Visual Studio Code
+  - Git
+  - xUnit
+  - Moq
 
-3. **Ver Detalles**:
-   - Hacer clic en el icono de información junto a un ticket
-   - Ver toda la información del ticket, incluyendo fechas de creación y actualización
-   - La vista de detalles muestra una línea de tiempo con el historial del ticket
+## Cómo Ejecutar el Proyecto
 
-4. **Editar Ticket**:
-   - Hacer clic en el icono de edición junto a un ticket
-   - Modificar los campos necesarios
-   - Hacer clic en "Guardar" para actualizar el ticket
-   - La fecha de última actualización se actualiza automáticamente
+1. Asegúrese de tener instalado .NET 6.0 SDK
+2. Clone el repositorio
+3. Navegue a la carpeta del proyecto
+4. Ejecute los siguientes comandos:
 
-5. **Eliminar Ticket**:
-   - Hacer clic en el icono de eliminación junto a un ticket
-   - Confirmar la eliminación en el modal de confirmación
-   - Esta acción es irreversible
+```bash
+dotnet restore
+dotnet build
+dotnet run
+```
 
-### Estados de Tickets
+5. Abra un navegador y vaya a `https://localhost:5001` o `http://localhost:5000`
 
-- **Pendiente** <span style="color:#fbbc05">⬤</span>: El ticket está pendiente de ser atendido
-- **En Progreso** <span style="color:#4285f4">⬤</span>: El ticket está siendo trabajado actualmente
-- **En Revisión** <span style="color:#0288d1">⬤</span>: El ticket está en fase de revisión
-- **Completado** <span style="color:#34a853">⬤</span>: El ticket ha sido resuelto
-- **Cancelado** <span style="color:#ea4335">⬤</span>: El ticket ha sido cancelado
+## Pruebas
 
-### Prioridades
+Para ejecutar las pruebas, utilice el siguiente comando:
 
-- **Baja** <span style="color:#34a853">⬤</span>: Prioridad baja, puede esperar
-- **Media** <span style="color:#0288d1">⬤</span>: Prioridad media, atender cuando sea posible
-- **Alta** <span style="color:#fbbc05">⬤</span>: Prioridad alta, atender pronto
-- **Crítica** <span style="color:#ea4335">⬤</span>: Prioridad crítica, atender inmediatamente
+```bash
+dotnet test
+```
 
-## 🎨 Personalización Avanzada
+## Contribuciones
 
-La aplicación puede ser personalizada de múltiples formas:
-
-### Estilos y Temas
-
-- **Modificar Colores**: Editar las variables CSS en `wwwroot/css/site.css`:
-  ```css
-  :root {
-    --primary-color: #1a73e8;
-    --primary-light: #4285f4;
-    --primary-dark: #0d47a1;
-    /* Más variables de color... */
-  }
-  ```
-
-- **Cambiar Fuentes**: Actualizar las referencias de fuentes en `Views/Shared/_Layout.cshtml`
-
-### Funcionalidades JavaScript
-
-- **Añadir Animaciones**: Modificar o extender las funciones en `wwwroot/js/site.js`
-- **Personalizar Validaciones**: Ajustar la función `setupFormValidation()` en el archivo JavaScript
-
-### Vistas y Plantillas
-
-- **Modificar Layouts**: Editar `Views/Shared/_Layout.cshtml` para cambios globales
-- **Personalizar Formularios**: Actualizar las vistas en `Views/Tickets/`
-
-### Modelo de Datos
-
-- **Añadir Campos**: Extender el modelo `Ticket.cs` con propiedades adicionales
-- **Crear Nuevas Entidades**: Añadir modelos relacionados como `Proyecto` o `Usuario`
-
-## 🔄 Actualización y Mantenimiento
-
-Para mantener la aplicación actualizada:
-
-1. **Actualizar Dependencias**:
-   ```bash
-   dotnet restore
-   ```
-
-2. **Actualizar Bibliotecas Cliente**:
-   ```bash
-   libman restore
-   ```
-
-3. **Aplicar Nuevas Migraciones** (si se modifican los modelos):
-   ```bash
-   dotnet ef migrations add NombreDeLaMigracion
-   dotnet ef database update
-   ```
-
-## 📊 Características Técnicas
-
-- **Patrón MVC**: Arquitectura Modelo-Vista-Controlador
-- **Entity Framework Core**: ORM para acceso a datos
-- **SQLite**: Base de datos ligera y portable
-- **Bootstrap 5**: Framework CSS para diseño responsive
-- **Font Awesome 6**: Iconos vectoriales
-- **jQuery**: Biblioteca JavaScript para manipulación del DOM
-- **Validación del lado del cliente y servidor**: Garantiza la integridad de los datos
-
-## 📝 Licencia
-
-Este proyecto está licenciado bajo la Licencia MIT - ver el archivo LICENSE para más detalles.
-
-## 📞 Contacto y Soporte
-
-Para preguntas, soporte o contribuciones:
-
-- **Correo Electrónico**: [tu-email@ejemplo.com]
-- **GitHub**: [tu-usuario-github]
-- **Sitio Web**: [tu-sitio-web.com]
-
----
-
-<p align="center">
-  Desarrollado con ❤️ por [Tu Nombre/Empresa]
-</p>
+Las contribuciones son bienvenidas. Por favor, asegúrese de seguir las convenciones de código y añadir pruebas para las nuevas funcionalidades.

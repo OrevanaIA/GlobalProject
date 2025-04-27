@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentación Técnica - Sistema de Gestión de Tickets</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3, h4 {
+            color: #2c3e50;
+            margin-top: 1.5em;
+        }
+        h1 {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 5px;
+        }
+        code {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            padding: 2px 4px;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 10px;
+            overflow: auto;
+        }
+        pre code {
+            border: none;
+            padding: 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .mermaid {
+            margin: 20px 0;
+            text-align: center;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            color: #555;
+            margin: 20px 0;
+            background-color: #f9f9f9;
+            padding: 10px 15px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        .toc {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .toc ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        .toc li {
+            margin: 5px 0;
+        }
+        @media print {
+            body {
+                font-size: 12pt;
+            }
+            pre, code {
+                font-size: 10pt;
+            }
+            a {
+                color: #000;
+                text-decoration: none;
+            }
+            .no-print {
+                display: none;
+            }
+            @page {
+                margin: 2cm;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'default',
+                flowchart: { useMaxWidth: false }
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Documentación Técnica - Sistema de Gestión de Tickets</h1>
+
+    <div class="toc">
+        <h2>Índice</h2>
+        <ul>
+            <li><a href="#introducción">1. Introducción</a></li>
+            <li><a href="#diseño-detallado">2. Diseño Detallado</a>
+                <ul>
+                    <li><a href="#modelo-de-dominio">Modelo de Dominio</a></li>
+                    <li><a href="#diagrama-de-clases">Diagrama de Clases</a></li>
+                    <li><a href="#diagrama-de-base-de-datos">Diagrama de Base de Datos</a></li>
+                </ul>
+            </li>
+            <li><a href="#flujo-de-trabajo">3. Flujo de Trabajo</a>
+                <ul>
+                    <li><a href="#diagrama-de-flujo">Diagrama de Flujo</a></li>
+                    <li><a href="#casos-de-uso">Casos de Uso</a></li>
+                </ul>
+            </li>
+            <li><a href="#implementación-técnica">4. Implementación Técnica</a>
+                <ul>
+                    <li><a href="#arquitectura">Arquitectura</a></li>
+                    <li><a href="#tecnologías-utilizadas">Tecnologías Utilizadas</a></li>
+                    <li><a href="#estructura-del-proyecto">Estructura del Proyecto</a></li>
+                </ul>
+            </li>
+            <li><a href="#patrones-de-diseño">5. Patrones de Diseño</a>
+                <ul>
+                    <li><a href="#mvc-model-view-controller">MVC (Model-View-Controller)</a></li>
+                    <li><a href="#repository-pattern">Repository Pattern</a></li>
+                    <li><a href="#dependency-injection">Dependency Injection</a></li>
+                </ul>
+            </li>
+            <li><a href="#api-reference">6. API Reference</a>
+                <ul>
+                    <li><a href="#controllers">Controllers</a></li>
+                    <li><a href="#endpoints">Endpoints</a></li>
+                    <li><a href="#modelos-de-datos">Modelos de Datos</a></li>
+                </ul>
+            </li>
+            <li><a href="#seguridad">7. Seguridad</a>
+                <ul>
+                    <li><a href="#autenticación-y-autorización">Autenticación y Autorización</a></li>
+                    <li><a href="#protección-de-datos">Protección de Datos</a></li>
+                    <li><a href="#validación-de-entradas">Validación de Entradas</a></li>
+                </ul>
+            </li>
+            <li><a href="#rendimiento-y-escalabilidad">8. Rendimiento y Escalabilidad</a>
+                <ul>
+                    <li><a href="#optimizaciones">Optimizaciones</a></li>
+                    <li><a href="#estrategias-de-caché">Estrategias de Caché</a></li>
+                    <li><a href="#escalabilidad-horizontal-y-vertical">Escalabilidad Horizontal y Vertical</a></li>
+                </ul>
+            </li>
+            <li><a href="#pruebas-de-calidad">9. Pruebas de Calidad</a>
+                <ul>
+                    <li><a href="#estrategia-de-pruebas">Estrategia de Pruebas</a></li>
+                    <li><a href="#cobertura-de-pruebas">Cobertura de Pruebas</a></li>
+                    <li><a href="#automatización-de-pruebas">Automatización de Pruebas</a></li>
+                </ul>
+            </li>
+            <li><a href="#despliegue-y-operaciones">10. Despliegue y Operaciones</a>
+                <ul>
+                    <li><a href="#entornos">Entornos</a></li>
+                    <li><a href="#cicd">CI/CD</a></li>
+                    <li><a href="#monitoreo">Monitoreo</a></li>
+                </ul>
+            </li>
+            <li><a href="#mantenimiento-y-roadmap">11. Mantenimiento y Roadmap</a>
+                <ul>
+                    <li><a href="#gestión-de-versiones">Gestión de Versiones</a></li>
+                    <li><a href="#roadmap-de-funcionalidades">Roadmap de Funcionalidades</a></li>
+                    <li><a href="#deuda-técnica">Deuda Técnica</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <h2 id="introducción">Introducción</h2>
+    <p>El Sistema de Gestión de Tickets es una aplicación web desarrollada en ASP.NET Core 6.0 que permite la gestión eficiente de tickets de soporte o incidencias. La aplicación facilita la creación, seguimiento, actualización y resolución de tickets, proporcionando una interfaz intuitiva y funcional para los usuarios.</p>
+    <p>Este documento técnico proporciona una visión detallada de la arquitectura, diseño, implementación y operación del sistema, sirviendo como referencia para desarrolladores, administradores y otros stakeholders involucrados en el proyecto.</p>
+
+    <h2 id="diseño-detallado">Diseño Detallado</h2>
+
+    <h3 id="modelo-de-dominio">Modelo de Dominio</h3>
+    <p>El modelo de dominio del sistema se centra en la entidad principal <code>Ticket</code>, que representa una incidencia o solicitud de soporte en el sistema.</p>
+
+    <h4>Entidades Principales</h4>
+    <p><strong>Ticket</strong>:</p>
+    <ul>
+        <li>Representa una incidencia o solicitud de soporte</li>
+        <li>Contiene información sobre el problema, su estado, prioridad y la persona asignada</li>
+        <li>Incluye metadatos como fechas de creación y actualización</li>
+    </ul>
+
+    <p><strong>Usuario</strong> (implementado a través de ASP.NET Identity):</p>
+    <ul>
+        <li>Representa a los usuarios del sistema</li>
+        <li>Puede tener diferentes roles y permisos</li>
+        <li>Interactúa con los tickets (crea, actualiza, resuelve)</li>
+    </ul>
+
+    <h4>Enumeraciones</h4>
+    <p><strong>EstadoTicket</strong>:</p>
+    <ul>
+        <li>Pendiente: El ticket ha sido creado pero aún no se ha comenzado a trabajar en él</li>
+        <li>EnProgreso: Se está trabajando activamente en el ticket</li>
+        <li>EnRevision: El ticket está siendo revisado antes de ser marcado como completado</li>
+        <li>Completado: El ticket ha sido resuelto satisfactoriamente</li>
+        <li>Cancelado: El ticket ha sido cancelado y no se trabajará más en él</li>
+    </ul>
+
+    <p><strong>PrioridadTicket</strong>:</p>
+    <ul>
+        <li>Baja: El ticket no es urgente y puede ser atendido cuando haya disponibilidad</li>
+        <li>Media: El ticket tiene una prioridad estándar</li>
+        <li>Alta: El ticket requiere atención prioritaria</li>
+        <li>Crítica: El ticket requiere atención inmediata</li>
+    </ul>
+
+    <h3 id="diagrama-de-clases">Diagrama de Clases</h3>
+    <div class="mermaid">
+        classDiagram
+            class Ticket {
+                +int Id
+                +string Titulo
+                +string Descripcion
+                +EstadoTicket Estado
+                +PrioridadTicket Prioridad
+                +string PersonaAsignada
+                +string Cargo
+                +string Telefono
+                +string Email
+                +DateTime FechaCreacion
+                +DateTime? UltimaActualizacion
+            }
+            
+            class EstadoTicket {
+                <<enumeration>>
+                Pendiente
+                EnProgreso
+                EnRevision
+                Completado
+                Cancelado
+            }
+            
+            class PrioridadTicket {
+                <<enumeration>>
+                Baja
+                Media
+                Alta
+                Critica
+            }
+            
+            class ApplicationDbContext {
+                +DbSet<Ticket> Tickets
+                +OnModelCreating(ModelBuilder)
+            }
+            
+            class TicketsController {
+                +Index()
+                +Details(int?)
+                +Create()
+                +Create(Ticket)
+                +Edit(int?)
+                +Edit(int, Ticket)
+                +Delete(int?)
+                +DeleteConfirmed(int)
+            }
+            
+            class HomeController {
+                +Index()
+                +Privacy()
+                +Error()
+            }
+            
+            Ticket --> EstadoTicket
+            Ticket --> PrioridadTicket
+            ApplicationDbContext --> Ticket : contains
+            TicketsController --> ApplicationDbContext : uses
+    </div>
+
+    <h3 id="diagrama-de-base-de-datos">Diagrama de Base de Datos</h3>
+    <div class="mermaid">
+        erDiagram
+            TICKETS {
+                int Id PK
+                string Titulo
+                string Descripcion
+                int Estado
+                int Prioridad
+                string PersonaAsignada
+                string Cargo
+                string Telefono
+                string Email
+                datetime FechaCreacion
+                datetime UltimaActualizacion
+            }
+            
+            ASPNETUSERS {
+                string Id PK
+                string UserName
+                string Email
+                string PasswordHash
+                bool EmailConfirmed
+                string SecurityStamp
+                string PhoneNumber
+                bool PhoneNumberConfirmed
+                bool TwoFactorEnabled
+                datetime LockoutEnd
+                bool LockoutEnabled
+                int AccessFailedCount
+            }
+            
+            ASPNETROLES {
+                string Id PK
+                string Name
+                string NormalizedName
+                string ConcurrencyStamp
+            }
+            
+            ASPNETUSERROLES {
+                string UserId PK,FK
+                string RoleId PK,FK
+            }
+            
+            ASPNETUSERS ||--o{ ASPNETUSERROLES : has
+            ASPNETROLES ||--o{ ASPNETUSERROLES : has
+    </div>
+
+    <h2 id="flujo-de-trabajo">Flujo de Trabajo</h2>
+
+    <h3 id="diagrama-de-flujo">Diagrama de Flujo</h3>
+    <p>El siguiente diagrama muestra el flujo de trabajo típico para la gestión de tickets en el sistema:</p>
+    <div class="mermaid">
+        flowchart TD
+            A[Usuario] -->|Crea| B[Nuevo Ticket]
+            B -->|Estado Inicial| C[Ticket Pendiente]
+            C -->|Asignación| D[Ticket En Progreso]
+            D -->|Resolución| E[Ticket En Revisión]
+            E -->|Aprobación| F[Ticket Completado]
+            E -->|Rechazo| D
+            C -->|Cancelación| G[Ticket Cancelado]
+            D -->|Cancelación| G
+    </div>
+
+    <h3 id="casos-de-uso">Casos de Uso</h3>
+
+    <h4>Creación de Ticket</h4>
+    <ol>
+        <li>El usuario accede a la sección de tickets</li>
+        <li>Selecciona la opción "Crear Nuevo Ticket"</li>
+        <li>Completa el formulario con la información requerida:
+            <ul>
+                <li>Título</li>
+                <li>Descripción</li>
+                <li>Prioridad</li>
+                <li>Persona asignada y sus datos de contacto</li>
+            </ul>
+        </li>
+        <li>Envía el formulario</li>
+        <li>El sistema valida los datos</li>
+        <li>Si son válidos, crea el ticket con estado "Pendiente"</li>
+        <li>Redirige al usuario a la lista de tickets</li>
+    </ol>
+
+    <h4>Actualización de Ticket</h4>
+    <ol>
+        <li>El usuario accede a la lista de tickets</li>
+        <li>Selecciona el ticket que desea actualizar</li>
+        <li>Hace clic en "Editar"</li>
+        <li>Modifica los campos necesarios</li>
+        <li>Envía el formulario</li>
+        <li>El sistema valida los datos</li>
+        <li>Si son válidos, actualiza el ticket y registra la fecha de actualización</li>
+        <li>Redirige al usuario a la lista de tickets</li>
+    </ol>
+
+    <h4>Resolución de Ticket</h4>
+    <ol>
+        <li>El usuario asignado trabaja en el ticket</li>
+        <li>Actualiza el estado a "En Progreso" mientras trabaja</li>
+        <li>Una vez resuelto, actualiza el estado a "En Revisión"</li>
+        <li>Un supervisor o el creador del ticket revisa la solución</li>
+        <li>Si es satisfactoria, actualiza el estado a "Completado"</li>
+        <li>Si no es satisfactoria, devuelve el estado a "En Progreso" con comentarios</li>
+    </ol>
+
+    <h2 id="implementación-técnica">Implementación Técnica</h2>
+
+    <h3 id="arquitectura">Arquitectura</h3>
+    <p>El sistema está implementado siguiendo una arquitectura de capas, basada en el patrón MVC (Model-View-Controller) con ASP.NET Core 6.0:</p>
+    <ol>
+        <li><strong>Capa de Presentación</strong>: Implementada con Razor Views y Bootstrap para la interfaz de usuario</li>
+        <li><strong>Capa de Aplicación</strong>: Controladores que manejan las solicitudes HTTP y coordinan la lógica de negocio</li>
+        <li><strong>Capa de Dominio</strong>: Modelos que representan las entidades del negocio y su lógica</li>
+        <li><strong>Capa de Datos</strong>: Entity Framework Core para el acceso a datos y persistencia</li>
+    </ol>
+
+    <h3 id="tecnologías-utilizadas">Tecnologías Utilizadas</h3>
+    <ul>
+        <li><strong>Backend</strong>:
+            <ul>
+                <li>ASP.NET Core 6.0</li>
+                <li>Entity Framework Core 6.0</li>
+                <li>ASP.NET Core Identity para autenticación y autorización</li>
+                <li>SQLite como base de datos</li>
+            </ul>
+        </li>
+        <li><strong>Frontend</strong>:
+            <ul>
+                <li>Razor Views</li>
+                <li>Bootstrap 5</li>
+                <li>jQuery</li>
+                <li>Font Awesome para iconos</li>
+            </ul>
+        </li>
+        <li><strong>Herramientas de Desarrollo</strong>:
+            <ul>
+                <li>Visual Studio / Visual Studio Code</li>
+                <li>Git para control de versiones</li>
+                <li>xUnit para pruebas unitarias</li>
+                <li>Moq para mocking en pruebas</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3 id="estructura-del-proyecto">Estructura del Proyecto</h3>
+    <pre><code>GestionTickets/
+├── Controllers/                # Controladores MVC
+│   ├── HomeController.cs       # Controlador para la página principal
+│   └── TicketsController.cs    # Controlador para la gestión de tickets
+├── Data/                       # Capa de acceso a datos
+│   └── ApplicationDbContext.cs # Contexto de EF Core
+├── Models/                     # Modelos de dominio
+│   ├── ErrorViewModel.cs       # Modelo para manejo de errores
+│   └── Ticket.cs               # Modelo principal de Ticket
+├── Views/                      # Vistas Razor
+│   ├── Home/                   # Vistas del controlador Home
+│   ├── Shared/                 # Vistas compartidas (layouts, etc.)
+│   └── Tickets/                # Vistas para la gestión de tickets
+├── wwwroot/                    # Recursos estáticos
+│   ├── css/                    # Hojas de estilo
+│   ├── js/                     # Scripts JavaScript
+│   └── lib/                    # Bibliotecas de terceros
+├── Migrations/                 # Migraciones de EF Core
+├── GestionTickets.Tests/       # Proyecto de pruebas
+│   ├── HomeControllerTests.cs  # Pruebas para HomeController
+│   ├── TicketModelTests.cs     # Pruebas para el modelo Ticket
+│   └── TicketsControllerTests.cs # Pruebas para TicketsController
+├── Program.cs                  # Punto de entrada y configuración
+└── appsettings.json            # Configuración de la aplicación</code></pre>
+
+    <h2 id="patrones-de-diseño">Patrones de Diseño</h2>
+
+    <h3 id="mvc-model-view-controller">MVC (Model-View-Controller)</h3>
+    <p>El sistema implementa el patrón MVC para separar la lógica de negocio, la presentación y el control:</p>
+    <ul>
+        <li><strong>Modelos</strong>: Representan las entidades del dominio (Ticket) y su lógica asociada</li>
+        <li><strong>Vistas</strong>: Implementadas con Razor, muestran la interfaz de usuario</li>
+        <li><strong>Controladores</strong>: Manejan las solicitudes HTTP, coordinan la lógica y seleccionan las vistas a mostrar</li>
+    </ul>
+
+    <h3 id="repository-pattern">Repository Pattern</h3>
+    <p>Aunque no está implementado explícitamente, el sistema utiliza Entity Framework Core como un ORM que proporciona una abstracción similar al patrón Repository, permitiendo:</p>
+    <ul>
+        <li>Acceso centralizado a los datos</li>
+        <li>Separación de la lógica de negocio de la lógica de acceso a datos</li>
+        <li>Facilidad para realizar pruebas unitarias mediante mocking</li>
+    </ul>
+
+    <h3 id="dependency-injection">Dependency Injection</h3>
+    <p>ASP.NET Core utiliza inyección de dependencias de forma nativa, lo que se aprovecha en el sistema para:</p>
+    <ul>
+        <li>Inyectar el contexto de base de datos en los controladores</li>
+        <li>Inyectar servicios de logging</li>
+        <li>Facilitar las pruebas unitarias mediante la sustitución de dependencias</li>
+    </ul>
+
+    <h2 id="api-reference">API Reference</h2>
+
+    <h3 id="controllers">Controllers</h3>
+
+    <h4>HomeController</h4>
+    <p>Maneja las páginas generales de la aplicación.</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Método</th>
+                <th>Ruta</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>GET</td>
+                <td>/Home/Index</td>
+                <td>Página principal</td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>/Home/Privacy</td>
+                <td>Página de política de privacidad</td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>/Home/Error</td>
+                <td>Página de error</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h4>TicketsController</h4>
+    <p>Maneja todas las operaciones relacionadas con los tickets.</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Método</th>
+                <th>Ruta</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>GET</td>
+                <td>/Tickets</td>
+                <td>Lista todos los tickets</td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>/Tickets/Details/{id}</td>
+                <td>Muestra los detalles de un ticket específico</td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>/Tickets/Create</td>
+                <td>Muestra el formulario para crear un nuevo ticket</td>
+            </tr>
+            <tr>
+                <td>POST</td>
+                <td>/Tickets/Create</td>
+                <td>Procesa la creación de un nuevo ticket</td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>/Tickets/Edit/{id}</td>
+                <td>Muestra el formulario para editar un ticket existente</td>
+            </tr>
+            <tr>
+                <td>POST</td>
+                <td>/Tickets/Edit/{id}</td>
+                <td>Procesa la actualización de un ticket existente</td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>/Tickets/Delete/{id}</td>
+                <td>Muestra la confirmación para eliminar un ticket</td>
+            </tr>
+            <tr>
+                <td>POST</td>
+                <td>/Tickets/Delete/{id}</td>
+                <td>Procesa la eliminación de un ticket</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3 id="endpoints">Endpoints</h3>
+
+    <h4>GET /Tickets</h4>
+    <p>Lista todos los tickets en el sistema.</p>
+    <p><strong>Respuesta</strong>:</p>
+    <ul>
+        <li>Vista con la lista de tickets</li>
+        <li>Cada ticket muestra: título, estado, prioridad, persona asignada y fecha de creación</li>
+        <li>Incluye estadísticas de tickets por estado</li>
+    </ul>
+
+    <h4>GET /Tickets/Details/{id}</h4>
+    <p>Muestra los detalles completos de un ticket específico.</p>
+    <p><strong>Parámetros</strong>:</p>
+    <ul>
+        <li><code>id</code>: ID del ticket a mostrar</li>
+    </ul>
+    <p><strong>Respuesta</strong>:</p>
+    <ul>
+        <li>Vista con todos los detalles del ticket</li>
+        <li>Si el ID no existe, retorna NotFound (404)</li>
+    </ul>
+
+    <h4>POST /Tickets/Create</h4>
+    <p>Crea un nuevo ticket en el sistema.</p>
+    <p><strong>Parámetros del formulario</strong>:</p>
+    <ul>
+        <li><code>Titulo</code>: Título del ticket (requerido, máx. 100 caracteres)</li>
+        <li><code>Descripcion</code>: Descripción detallada del problema (requerido)</li>
+        <li><code>Estado</code>: Estado inicial del ticket (requerido)</li>
+        <li><code>Prioridad</code>: Prioridad del ticket (requerido)</li>
+        <li><code>PersonaAsignada</code>: Nombre de la persona asignada (requerido, máx. 100 caracteres)</li>
+        <li><code>Cargo</code>: Cargo de la persona asignada (requerido, máx. 100 caracteres)</li>
+        <li><code>Telefono</code>: Teléfono de contacto (requerido, formato válido)</li>
+        <li><code>Email</code>: Correo electrónico de contacto (requerido, formato válido)</li>
+    </ul>
+    <p><strong>Respuesta</strong>:</p>
+    <ul>
+        <li>Redirección a la lista de tickets si es exitoso</li>
+        <li>Vista del formulario con errores de validación si falla</li>
+    </ul>
+
+    <h3 id="modelos-de-datos">Modelos de Datos</h3>
+
+    <h4>Ticket</h4>
+    <pre><code>public class Ticket
+{
+    public int Id { get; set; }
+    
+    [Required(ErrorMessage = "El título es obligatorio")]
+    [StringLength(100, ErrorMessage = "El título no puede exceder los 100 caracteres")]
+    [Display(Name = "Título")]
+    public string Titulo { get; set; }
+    
+    [Required(ErrorMessage = "La descripción es obligatoria")]
+    [Display(Name = "Descripción")]
+    public string Descripcion { get; set; }
+    
+    [Required(ErrorMessage = "El estado es obligatorio")]
+    [Display(Name = "Estado")]
+    public EstadoTicket Estado { get; set; }
+    
+    [Required(ErrorMessage = "La prioridad es obligatoria")]
+    [Display(Name = "Prioridad")]
+    public PrioridadTicket Prioridad { get; set; }
+    
+    [Required(ErrorMessage = "La persona asignada es obligatoria")]
+    [StringLength(100, ErrorMessage = "El nombre no puede exceder los 100 caracteres")]
+    [Display(Name = "Persona Asignada")]
+    public string PersonaAsignada { get; set; }
+    
+    [Required(ErrorMessage = "El cargo es obligatorio")]
+    [StringLength(100, ErrorMessage = "El cargo no puede exceder los 100 caracteres")]
+    [Display(Name = "Cargo")]
+    public string Cargo { get; set; }
+    
+    [Required(ErrorMessage = "El número de teléfono es obligatorio")]
+    [Phone(ErrorMessage = "Formato de teléfono inválido")]
+    [Display(Name = "Teléfono")]
+    public string Telefono { get; set; }
+    
+    [Required(ErrorMessage = "El correo electrónico es obligatorio")]
+    [EmailAddress(Error
